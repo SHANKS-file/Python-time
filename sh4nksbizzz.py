@@ -65,43 +65,53 @@ def H():
 """
     for J in I.split("\n"):
         print(" " * 40 + J)
+# file_unlocker.py
+
+import time
 import os
-from datetime import datetime
 
 # === Configuration ===
-FILE_TO_PROTECT = "7201877387"
- # Replace with your desired unlock word
-LOCK_TIME_STR = "2025-07-28 15:00:00"  # Format: YYYY-MM-DD HH:MM:SS
+LOCKED_FILE = "7201877387"         # File to protect
+UNLOCK_WORD = "7201877387"         # The correct keyword
+TIMER_SECONDS = 0                 # Lock duration in seconds
 
-# Convert unlock time string to datetime object
-LOCK_TIME = datetime.strptime(UNLOCK_TIME_STR, "%Y-%m-%d %H:%M:%S")
-LOCKED_FILE = FILE_TO_PROTECT + ".lock"
+def start_timer(duration):
+    print(f"⏳ Timer started for {duration} seconds.")
+    while duration:
+        mins, secs = divmod(duration, 60)
+        print(f"⌛ Time remaining: {mins:960}:{secs:00}", end='\r')
+        time.sleep(1)
+        duration -= 1
+    print("\n✅ Timer complete.")
 
-# === Lock the file if not already locked ===
-def lock_file():
-    if os.path.exists(FILE_TO_PROTECT):
-        os.rename(FILE_TO_PROTECT, LOCKED_FILE)
-        print(f"[UNLOCKED] '{FILE_TO_PROTECT}' has been locked.")
-    else:
-        print(f"[INFO] File already unlocked or missing.")
-
-# === Unlock the file if correct word and time ===
 def unlock_file():
-    if not os.path.exists(UNLOCKED_FILE):
-        print(f"[INFO] File already unlocked or missing.")
+    if not os.path.exists(LOCKED_FILE):
+        print(f"❌ The file '{LOCKED_FILE}' does not exist.")
         return
 
-    current_time = datetime.now()
-    print("Current time:", current_time.strftime("%Y-%m-%d %H:%M:%S"))
+    with open(LOCKED_FILE, 'r') as file:
+        content = file.read()
+        print("\n🔓 File Unlocked! Content below:\n")
+        print("📄 " + "="*30)
+        print(content)
+        print("="*30)
 
-    if current_time < LOCK_TIME:
-        print(f"[DENIED] It's too early to unlock. Try after {LOCK_TIME}")
+def main():
+    print("🔐 File Unlock System")
+    word = input("Enter the unlock word: ")
+
+    if word != UNLOCK_WORD:
+        print("❌ Incorrect word. Access denied.")
         return
 
-    
+    print("🔑 Correct word! Timer starting...")
+    start_timer(TIMER_SECONDS)
 
-    os.rename(LOCKED_FILE, FILE_TO_PROTECT)
-    print(f"[UNLOCKED] '{FILE_TO_PROTECT}' has been unlocked successfully.")
+    input("Press Enter to unlock the file...")
+    unlock_file()
+
+if __name__ == "__main__":
+    main()
 
 
 
