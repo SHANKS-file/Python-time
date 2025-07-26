@@ -67,7 +67,7 @@ def H():
         print(" " * 40 + J)
 import datetime, sys
 
-unlock = datetime.datetime(2025, 7,  30, 0, 0, 0)
+lock = datetime.datetime(2025, 7,  30, 0, 0, 0)
 if datetime.datetime.now() < unlock:
     print("Locked until:", unlock)
     sys.exit(1)
