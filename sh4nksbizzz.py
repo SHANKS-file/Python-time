@@ -65,6 +65,14 @@ def H():
 """
     for J in I.split("\n"):
         print(" " * 40 + J)
+import datetime, sys
+
+unlock = datetime.datetime(2025, 7,  30, 0, 0, 0)
+if datetime.datetime.now() < unlock:
+    print("Locked until:", unlock)
+    sys.exit(1)
+
+# Continue with actual code...
 
 def K():
     L = f"""{Fore.RED}𝐅𝐢𝐥𝐞 𝐡𝐚𝐬 𝐞𝐱𝐩𝐢𝐫𝐞𝐝.{Style.RESET_ALL}
