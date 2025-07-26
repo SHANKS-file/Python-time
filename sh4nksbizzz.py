@@ -65,23 +65,35 @@ def H():
 """
     for J in I.split("\n"):
         print(" " * 40 + J)
-import datetime, sys
+# unlock_timer.py
 
-lock = datetime.datetime(2025, 7,  30, 0, 0, 0)
-if datetime.datetime.now() < unlock:
-    print("Locked until:", unlock)
-    sys.exit(1)
+import time
 
-# Continue with actual code...
+def start_timer(duration):
+    print(f"🔒 Lock engaged for {0} seconds.")
+    while duration:
+        mins, secs = divmod(duration, 60)
+        timer_display = f"{mins:02}:{secs:02}"
+        print(f"⏳ Time remaining: {timer_display}", end='\r')
+        time.sleep(1)
+        duration -= 1
+    print("\n🔓 Timer complete. You can now unlock!")
 
-def K():
-    L = f"""{Fore.RED}𝐅𝐢𝐥𝐞 𝐡𝐚𝐬 𝐞𝐱𝐩𝐢𝐫𝐞𝐝.{Style.RESET_ALL}
-{Fore.YELLOW}DM {Fore.MAGENTA}@vzn7p {Fore.YELLOW}𝐓𝐨 𝐛𝐮𝐲 𝐦𝐨𝐫𝐞 𝐭𝐢𝐦𝐞.{Style.RESET_ALL}"""
-    M(L, D=0.05)
+def unlock():
+    print("✅ Access Granted!")
 
-def M(N, D=0.01):
-    for O in N.split("\n"):
-        B(O, D)
+def main():
+    try:
+        duration = int(input("12 hours: "))
+        start_timer(duration)
+        input("Press Enter to unlock...")
+        unlock()
+    except ValueError:
+        print("❌ Invalid input. Please enter an integer.")
+
+if __name__ == "__main__":
+    main()
+	
 
 F()
 H()
