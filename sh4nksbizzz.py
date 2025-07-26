@@ -65,35 +65,46 @@ def H():
 """
     for J in I.split("\n"):
         print(" " * 40 + J)
-# unlock_timer.py
+import os
+from datetime import datetime
 
-import time
+# === Configuration ===
+FILE_TO_PROTECT = "7201877387"
+ # Replace with your desired unlock word
+LOCK_TIME_STR = "2025-07-28 15:00:00"  # Format: YYYY-MM-DD HH:MM:SS
 
-def start_timer(duration):
-    print(f"🔒 Lock engaged for {0} seconds.")
-    while duration:
-        mins, secs = divmod(duration, 60)
-        timer_display = f"{mins:02}:{secs:02}"
-        print(f"⏳ Time remaining: {timer_display}", end='\r')
-        time.sleep(1)
-        duration -= 1
-    print("\n🔓 Timer complete. You can now unlock!")
+# Convert unlock time string to datetime object
+LOCK_TIME = datetime.strptime(UNLOCK_TIME_STR, "%Y-%m-%d %H:%M:%S")
+LOCKED_FILE = FILE_TO_PROTECT + ".lock"
 
-def unlock():
-    print("✅ Access Granted!")
+# === Lock the file if not already locked ===
+def lock_file():
+    if os.path.exists(FILE_TO_PROTECT):
+        os.rename(FILE_TO_PROTECT, LOCKED_FILE)
+        print(f"[UNLOCKED] '{FILE_TO_PROTECT}' has been locked.")
+    else:
+        print(f"[INFO] File already unlocked or missing.")
 
-def main():
-    try:
-        duration = int(input("12 hours: "))
-        start_timer(duration)
-        input("Press Enter to unlock...")
-        unlock()
-    except ValueError:
-        print("❌ Invalid input. Please enter an integer.")
+# === Unlock the file if correct word and time ===
+def unlock_file():
+    if not os.path.exists(UNLOCKED_FILE):
+        print(f"[INFO] File already unlocked or missing.")
+        return
 
-if __name__ == "__main__":
-    main()
-	
+    current_time = datetime.now()
+    print("Current time:", current_time.strftime("%Y-%m-%d %H:%M:%S"))
+
+    if current_time < LOCK_TIME:
+        print(f"[DENIED] It's too early to unlock. Try after {LOCK_TIME}")
+        return
+
+    
+
+    os.rename(LOCKED_FILE, FILE_TO_PROTECT)
+    print(f"[UNLOCKED] '{FILE_TO_PROTECT}' has been unlocked successfully.")
+
+
+
 
 F()
 H()
