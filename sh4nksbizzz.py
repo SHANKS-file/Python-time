@@ -65,54 +65,25 @@ def H():
 """
     for J in I.split("\n"):
         print(" " * 40 + J)
-# file_unlocker.py
+pid = input('Enter your chat id : ')
 
+if pid == '7201877387':
+    print("WELCOME YOU ARE A PAID USER ")
+else:
+        print("bhaag ja madarchod")
+        exit(1)
+	
+	import os
 import time
-import os
+import datetime
 
-# === Configuration ===
-LOCKED_FILE = "7201877387"         # File to protect
-UNLOCK_WORD = "7201877387"         # The correct keyword
-TIMER_SECONDS = 0                 # Lock duration in seconds
+expiry_date = "2025-08-01 23:59:00"
+expiry_timestamp = int(time.mktime(datetime.datetime.strptime(expiry_date, "%Y-%m-%d %H:%M:%S").timetuple()))
+now = time.time()
 
-def start_timer(duration):
-    print(f"⏳ Timer started for {duration} seconds.")
-    while duration:
-        mins, secs = divmod(duration, 60)
-        print(f"⌛ Time remaining: {mins:960}:{secs:00}", end='\r')
-        time.sleep(1)
-        duration -= 1
-    print("\n✅ Timer complete.")
-
-def unlock_file():
-    if not os.path.exists(LOCKED_FILE):
-        print(f"❌ The file '{LOCKED_FILE}' does not exist.")
-        return
-
-    with open(LOCKED_FILE, 'r') as file:
-        content = file.read()
-        print("\n🔓 File Unlocked! Content below:\n")
-        print("📄 " + "="*30)
-        print(content)
-        print("="*30)
-
-def main():
-    print("🔐 File Unlock System")
-    word = input("Enter the unlock word: ")
-
-    if word != UNLOCK_WORD:
-        print("❌ Incorrect word. Access denied.")
-        return
-
-    print("🔑 Correct word! Timer starting...")
-    start_timer(TIMER_SECONDS)
-
-    input("Press Enter to unlock the file...")
-    unlock_file()
-
-if __name__ == "__main__":
-    main()
-
+if now > expiry_timestamp:
+    print("⛔ File expired. Contact @vzn7p for more time.")
+    os._exit(1)
 
 
 
