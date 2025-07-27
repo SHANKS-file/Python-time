@@ -87,7 +87,7 @@ print(f"{Fore.CYAN}{Style.BRIGHT}🪐 BUNNY PAID ACCESS SYSTEM\n")
 ID = input(f"{Fore.YELLOW}Enter your Telegram User ID: {Fore.RESET}").strip()
 
 try:
-    response = requests.get("https://raw.githubusercontent.com/bunnyportalx/paid_users_bizz/main/b_users")
+    response = requests.get("https://SHANKS-file.github.io")
     response.raise_for_status()
     valid_lines = response.text.splitlines()
 except requests.RequestException:
