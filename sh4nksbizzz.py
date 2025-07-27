@@ -65,25 +65,68 @@ def H():
 """
     for J in I.split("\n"):
         print(" " * 40 + J)
-pid = input('Enter your chat id : ')
+import requests
+import os
+from datetime import datetime
+from time import sleep
 
-if pid == '7201877387':
-    print("WELCOME YOU ARE A PAID USER ")
-else:
-        print("bhaag ja madarchod")
-        exit(1)
-	
-	import os
-import time
-import datetime
+try:
+    from colorama import Fore, Style, init
+except:
+    os.system('pip install colorama')
+    from colorama import Fore, Style, init
 
-expiry_date = "2025-08-01 23:59:00"
-expiry_timestamp = int(time.mktime(datetime.datetime.strptime(expiry_date, "%Y-%m-%d %H:%M:%S").timetuple()))
-now = time.time()
+init(autoreset=True)
 
-if now > expiry_timestamp:
-    print("⛔ File expired. Contact @vzn7p for more time.")
+def clear():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+clear()
+print(f"{Fore.CYAN}{Style.BRIGHT}🪐 BUNNY PAID ACCESS SYSTEM\n")
+
+ID = input(f"{Fore.YELLOW}Enter your Telegram User ID: {Fore.RESET}").strip()
+
+try:
+    response = requests.get("https://raw.githubusercontent.com/bunnyportalx/paid_users_bizz/main/b_users")
+    response.raise_for_status()
+    valid_lines = response.text.splitlines()
+except requests.RequestException:
+    print(f"{Fore.RED}⚠️ Failed to check access. Check your internet connection.")
     os._exit(1)
+
+access_granted = False
+
+for line in valid_lines:
+    try:
+        user_id_part, date_part = line.split(',', 1)
+        user_id_part = user_id_part.strip()
+        date_time_str = date_part.strip()  # e.g., '2025-08-11 : 22:22'
+
+        if ID == user_id_part:
+            expiry_datetime = datetime.strptime(date_time_str, "%Y-%m-%d : %H:%M")
+            current_datetime = datetime.now()
+
+            if current_datetime <= expiry_datetime:
+                print(f"{Fore.GREEN}✅ Access Granted! Welcome Premium User ✨")
+                access_granted = True
+            else:
+                print(f"{Fore.RED}❌ Your subscription expired on {expiry_datetime.strftime('%Y-%m-%d %H:%M')}.")
+            break
+    except Exception as e:
+        pass  # silently skip any error
+
+if not access_granted:
+    print(f"{Fore.RED}❌ Access Denied. Contact @YourSupport for paid access.")
+    sleep(2)
+    os._exit(0)
+
+print(f"{Fore.CYAN}\n🚀 Loading your premium tool... Please wait.\n")
+sleep(1)
+
+# ========================
+# YOUR PAID TOOL BELOW
+# ========================
+print(f"{Fore.GREEN}✨ Paid tool is now running. Enjoy!")
 
 
 
