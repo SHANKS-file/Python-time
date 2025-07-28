@@ -224,7 +224,7 @@ def date(Id):
         else:
             return "2020-2023"
     except Exception:
-        return 'hhhh'
+        return '2024-2025'
 
 def InfoAcc(username, gg):
     global total
